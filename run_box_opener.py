@@ -6,7 +6,11 @@ import requests
 from pybip39 import Mnemonic
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 API_KEY = os.environ.get("API_KEY")
 API_URL = os.environ.get("API_URL", "https://api.erwin.lol")
 
