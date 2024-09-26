@@ -36,7 +36,10 @@ def submit_guesses():
         logging.info("✅ Guesses accepted")
         return False
     else:
-        logging.info("❌ Guesses rejected (%s): %s" % (resp.status_code, resp.text))
+        logging.info(
+            "❌ Guesses rejected (%s): %s"
+            % (resp.status_code, resp.text)
+        )
         return True
 
 
@@ -48,7 +51,8 @@ def do_loop():
             rate_limited = submit_guesses()
             if rate_limited:
                 sleep_time += 10
-            else: sleep_time -= 1
+            else:
+                sleep_time -= 1
         except Exception as err:
             logging.error("⚠️ Error occurred: %s" % str(err))
         time.sleep(sleep_time)
@@ -56,6 +60,9 @@ def do_loop():
 
 if __name__ == '__main__':
     if not API_KEY:
-        logging.error("⚠️ API Key not defined, set API_KEY environment variable")
+        logging.error(
+            "⚠️ API Key not defined, "
+            "set API_KEY environment variable"
+        )
     else:
         do_loop()
