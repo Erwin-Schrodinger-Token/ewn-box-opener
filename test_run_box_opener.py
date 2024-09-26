@@ -2,13 +2,14 @@ import unittest
 from unittest.mock import patch, MagicMock
 import run_box_opener
 
+
 class TestRunBoxOpener(unittest.TestCase):
     @patch('run_box_opener.requests.post')
     @patch('run_box_opener.Mnemonic')
     def test_submit_guesses_success(self, mock_mnemonic, mock_post):
         # Mock Mnemonic to return predictable phrases
         mock_mnemonic.return_value.phrase = "test phrase"
-        
+
         # Mock successful API response
         mock_response = MagicMock()
         mock_response.status_code = 202
@@ -27,7 +28,7 @@ class TestRunBoxOpener(unittest.TestCase):
     def test_submit_guesses_failure(self, mock_mnemonic, mock_post):
         # Mock Mnemonic to return predictable phrases
         mock_mnemonic.return_value.phrase = "test phrase"
-        
+
         # Mock failed API response
         mock_response = MagicMock()
         mock_response.status_code = 400
