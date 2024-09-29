@@ -2,8 +2,10 @@ import logging
 import time
 import os
 import requests
-
 from pybip39 import Mnemonic
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 logging.basicConfig(
