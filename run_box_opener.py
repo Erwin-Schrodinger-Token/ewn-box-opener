@@ -61,6 +61,10 @@ def do_loop():
                 sleep_time -= 1
         except Exception as err:
             logging.error("⚠️ Error occurred: %s" % str(err))
+
+        if sleep_time < 10:
+            sleep_time = 10
+
         time.sleep(sleep_time)
 
 
