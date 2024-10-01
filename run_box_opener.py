@@ -20,7 +20,8 @@ if DEVNET_API_KEY != "none":
     API_KEY = DEVNET_API_KEY
 else:
     API_KEY = os.environ.get("API_KEY")
-    
+
+
 def submit_guesses():
     passwords = []
 
