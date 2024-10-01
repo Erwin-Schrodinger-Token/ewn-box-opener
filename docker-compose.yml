@@ -1,0 +1,7 @@
+version: '2.4'
+services:
+    erwin:
+    image: ghcr.io/erwin-schrodinger-token/ewn-box-opener:latest
+    restart: unless-stopped
+    environment:
+      - API_KEY=
