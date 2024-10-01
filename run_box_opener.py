@@ -41,6 +41,12 @@ def submit_guesses():
     if resp.status_code == 202:
         logging.info("✅ Guesses accepted")
         return False
+    if resp.status_code == 404:
+        logging.info(
+            "❌ Guesses rejected (%s): %s"
+            % (resp.status_code, resp.text)
+        )
+        return False
     else:
         logging.info(
             "❌ Guesses rejected (%s): %s"
