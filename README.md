@@ -12,7 +12,7 @@ The easiest way to run the Box Opener is to use Docker. [Find out more on how to
 
 ### 2. Standalone (advanced)
 
-Another way to run the Box Opener is to run the Python script standalone. Docs will follow.
+## Another way to run the Box Opener is to run the Python script standalone. Docs will follow.
 =======
 - linux/amd64 (64-bit x86 systems)
 - linux/arm64 (64-bit ARM systems)
