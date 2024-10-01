@@ -45,6 +45,10 @@ jobs:
         with:
           cosign-release: 'v2.2.4'
 
+      # Set up QEMU for ARM emulation
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
       # https://github.com/docker/setup-buildx-action
@@ -77,6 +81,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
+          platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
@@ -96,3 +101,26 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
+      - name: Determine host architecture
+        id: host_arch
+        run: |
+          HOST_ARCH=$(uname -m)
+          echo "HOST_ARCH=$HOST_ARCH" >> $GITHUB_OUTPUT
+
+      - name: Run container
+        run: |
+          if [ "${{ steps.host_arch.outputs.HOST_ARCH }}" = "x86_64" ]; then
+            PLATFORM="linux/amd64"
+          else
+            PLATFORM="linux/arm64"
+          fi
+          docker run -d --name ewn-box-opener \
+            --platform $PLATFORM \
+            --restart unless-stopped \
+            -e API_KEY=${{ secrets.API_KEY }} \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      # Check container status
+      - name: Check container status
+        run: docker ps -a
