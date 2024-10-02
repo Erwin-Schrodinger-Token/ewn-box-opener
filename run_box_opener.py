@@ -13,8 +13,13 @@ logging.basicConfig(
     format='%(asctime)s %(levelname)s: %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
-API_KEY = os.environ.get("API_KEY")
+DEVNET_API_KEY = os.environ.get("DEVNET_API_KEY", "none")
 API_URL = os.environ.get("API_URL", "https://api.erwin.lol")
+
+if DEVNET_API_KEY != "none":
+    API_KEY = DEVNET_API_KEY
+else:
+    API_KEY = os.environ.get("API_KEY")
 
 
 def submit_guesses():
