@@ -5,10 +5,10 @@ import run_box_opener
 
 class TestRunBoxOpener(unittest.TestCase):
     @patch('run_box_opener.requests.post')
-    @patch('run_box_opener.Mnemonic')
+    @patch('run_box_opener.bip39_generate')
     def test_submit_guesses_success(self, mock_mnemonic, mock_post):
         # Mock Mnemonic to return predictable phrases
-        mock_mnemonic.return_value.phrase = "test phrase"
+        mock_mnemonic.return_value = "test phrase"
 
         # Mock successful API response
         mock_response = MagicMock()
@@ -24,10 +24,10 @@ class TestRunBoxOpener(unittest.TestCase):
         self.assertEqual(kwargs['json'][0], "test phrase")
 
     @patch('run_box_opener.requests.post')
-    @patch('run_box_opener.Mnemonic')
+    @patch('run_box_opener.bip39_generate')
     def test_submit_guesses_failure(self, mock_mnemonic, mock_post):
         # Mock Mnemonic to return predictable phrases
-        mock_mnemonic.return_value.phrase = "test phrase"
+        mock_mnemonic.return_value = "test phrase"
 
         # Mock failed API response
         mock_response = MagicMock()

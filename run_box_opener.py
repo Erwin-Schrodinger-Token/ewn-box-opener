@@ -2,7 +2,7 @@ import logging
 import time
 import os
 import requests
-from pybip39 import Mnemonic
+from bip39 import bip39_generate
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,10 +26,10 @@ def submit_guesses():
     passwords = []
 
     for x in range(0, 50):
-        passwords.append(Mnemonic().phrase)
+        passwords.append(bip39_generate(12))
 
-    logging.info("🔑️ Generated %s guesses" % len(passwords))
-    logging.info("➡️ Submitting to oracle")
+    logging.info("🔑️Generated %s guesses" % len(passwords))
+    logging.info(":envelope:Submitting to oracle")
 
     url = '%s/submit_guesses' % API_URL
     headers = {
