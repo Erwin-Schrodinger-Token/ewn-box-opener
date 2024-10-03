@@ -9,5 +9,5 @@ services:
     image: ghcr.io/erwin-schrodinger-token/ewn-box-opener:latest
     restart: unless-stopped
     environment:
-      - DEVNET_API_KEY="none"
-      - API_URL="https://devnet-api.erwin.lol/"
+      - DEVNET_API_KEY=none
+      - API_URL=https://devnet-api.erwin.lol/
