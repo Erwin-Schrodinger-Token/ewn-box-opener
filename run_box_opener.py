@@ -39,9 +39,10 @@ def submit_guesses():
         logging.info("✅ Guesses accepted")
         return False
     elif resp.status_code == 502:
-        logging.info("🚫 Bad Gateway")
+        logging.info("🚫 Oracle Ingest Issue 502")
+        return False
     elif resp.status_code == 404:
-        logging.info("❌ Guesses rejected (%s): %s" % (resp.status_code, resp.text))
+        logging.info("❌ Guesses rejected 404 Not Found")
         return False
     else:
         logging.info("❌ Guesses rejected (%s): %s" % (resp.status_code, resp.text))
