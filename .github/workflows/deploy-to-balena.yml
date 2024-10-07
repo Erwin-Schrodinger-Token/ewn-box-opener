@@ -1,0 +1,23 @@
+name: "Deploy to Balena App"
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  BALENA_APP: erwin_schrodinger_token/ewn-box-opener
+
+jobs:
+  build:
+    name: "Deploy-to-Balena"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+
+      - name: Deploy to Balena
+        uses: balena-io/deploy-to-balena-action@master
+        with:
+          balena_token: ${{ secrets.BALENA_API_KEY }}
+          fleet: ${{ env.BALENA_APP }}

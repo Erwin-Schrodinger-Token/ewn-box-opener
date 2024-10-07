@@ -2,8 +2,10 @@ import logging
 import time
 import os
 import requests
-
 from pybip39 import Mnemonic
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 logging.basicConfig(
@@ -11,8 +13,13 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
-API_KEY = os.environ.get("API_KEY")
+DEVNET_API_KEY = os.environ.get("DEVNET_API_KEY", "none")
 API_URL = os.environ.get("API_URL", "https://api.erwin.lol")
+
+if DEVNET_API_KEY != "none":
+    API_KEY = DEVNET_API_KEY
+else:
+    API_KEY = os.environ.get("API_KEY")
 
 
 def submit_guesses():
@@ -33,6 +40,8 @@ def submit_guesses():
         return False
     elif resp.status_code == 502:
         logging.info("🚫 Bad Gateway")
+    elif resp.status_code == 404:
+        logging.info("❌ Guesses rejected (%s): %s" % (resp.status_code, resp.text))
         return False
     else:
         logging.info("❌ Guesses rejected (%s): %s" % (resp.status_code, resp.text))
@@ -51,6 +60,10 @@ def do_loop():
                 sleep_time -= 1
         except Exception as err:
             logging.error("⚠️ Error occurred: %s" % str(err))
+
+        if sleep_time < 10:
+            sleep_time = 10
+
         time.sleep(sleep_time)
 
 
