@@ -8,8 +8,8 @@ from pybip39 import Mnemonic
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(levelname)s: %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    format="%(asctime)s %(levelname)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 API_KEY = os.environ.get("API_KEY")
 API_URL = os.environ.get("API_URL", "https://api.erwin.lol")
@@ -24,26 +24,18 @@ def submit_guesses():
     logging.info("🔑️ Generated %s guesses" % len(passwords))
     logging.info("➡️ Submitting to oracle")
 
-    url = '%s/submit_guesses' % API_URL
-    headers = {
-        'x-api-key': API_KEY,
-        'content-type': 'application/json'
-    }
-    resp = requests.post(
-        url,
-        json=passwords,
-        headers=headers,
-        timeout=60
-    )
+    url = "%s/submit_guesses" % API_URL
+    headers = {"x-api-key": API_KEY, "content-type": "application/json"}
+    resp = requests.post(url, json=passwords, headers=headers, timeout=60)
 
     if resp.status_code == 202:
         logging.info("✅ Guesses accepted")
         return False
+    elif resp.status_code == 502:
+        logging.info("🚫 Bad Gateway")
+        return False
     else:
-        logging.info(
-            "❌ Guesses rejected (%s): %s"
-            % (resp.status_code, resp.text)
-        )
+        logging.info("❌ Guesses rejected (%s): %s" % (resp.status_code, resp.text))
         return True
 
 
@@ -62,11 +54,8 @@ def do_loop():
         time.sleep(sleep_time)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if not API_KEY:
-        logging.error(
-            "⚠️ API Key not defined, "
-            "set API_KEY environment variable"
-        )
+        logging.error("⚠️ API Key not defined, " "set API_KEY environment variable")
     else:
         do_loop()
