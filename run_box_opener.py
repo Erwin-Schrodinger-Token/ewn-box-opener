@@ -10,8 +10,8 @@ load_dotenv()
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(levelname)s: %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    format="%(asctime)s %(levelname)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
 )
 DEVNET_API_KEY = os.environ.get("DEVNET_API_KEY", "none")
 API_URL = os.environ.get("API_URL", "https://api.erwin.lol")
@@ -31,10 +31,10 @@ def submit_guesses():
     logging.info("🔑️ Generated %s guesses" % len(passwords))
     logging.info("➡️ Submitting to oracle")
 
-    url = '%s/submit_guesses' % API_URL
+    url = f"{API_URL}/submit_guesses"
     headers = {
-        'x-api-key': API_KEY,
-        'content-type': 'application/json'
+        "x-api-key": API_KEY,
+        "content-type": "application/json"
     }
     resp = requests.post(
         url,
@@ -48,14 +48,12 @@ def submit_guesses():
         return False
     if resp.status_code == 404:
         logging.info(
-            "❌ Guesses rejected (%s): %s"
-            % (resp.status_code, resp.text)
+            f"❌ Guesses rejected ({resp.status_code}): {resp.text}"
         )
         return False
     else:
         logging.info(
-            "❌ Guesses rejected (%s): %s"
-            % (resp.status_code, resp.text)
+            f"❌ Guesses rejected ({resp.status_code}): {resp.text}"
         )
         return True
 
@@ -71,7 +69,7 @@ def do_loop():
             else:
                 sleep_time -= 1
         except Exception as err:
-            logging.error("⚠️ Error occurred: %s" % str(err))
+            logging.error(f"⚠️ Error occurred: {str(err)}")
 
         if sleep_time < 10:
             sleep_time = 10
@@ -79,7 +77,7 @@ def do_loop():
         time.sleep(sleep_time)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if not API_KEY:
         logging.error(
             "⚠️ API Key not defined, "
