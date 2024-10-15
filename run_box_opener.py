@@ -51,7 +51,6 @@ def submit_guesses():
             f"❌ Guesses rejected ({resp.status_code}): {resp.text}"
         )
         return False
-    else:
     if resp.status_code == 502:
         logging.info(
             f"❌ Guesses rejected ({resp.status_code}): Bad Gateway"
