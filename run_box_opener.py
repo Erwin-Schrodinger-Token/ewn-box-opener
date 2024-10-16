@@ -61,6 +61,11 @@ def submit_guesses():
             f"❌ Guesses rejected ({resp.status_code}): Bad Gateway"
         )
         return False
+    if resp.status_code == 530:
+        logging.info(
+            f"❌ Guesses rejected ({resp.status_code}): Argo Tunnel Error"
+        )
+        return False
     else:
         logging.info(
             f"❌ Guesses rejected ({resp.status_code}): {resp.text}"
