@@ -68,7 +68,7 @@ def submit_guesses():
         return False
     else:
         logging.info(
-            f"❌ Guesses rejected ({resp.status_code}): {resp.text}"
+            f"❌ Guesses rejected ({resp.status_code}): Unspecified Error"
         )
         return True
 
