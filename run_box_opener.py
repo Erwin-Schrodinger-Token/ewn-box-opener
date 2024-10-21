@@ -24,7 +24,6 @@ else:
 
 def submit_guesses():
     passwords = []
-
     for x in range(0, 50):
         passwords.append(Mnemonic().phrase)
 
@@ -45,6 +44,11 @@ def submit_guesses():
 
     if resp.status_code == 202:
         logging.info("✅ Guesses accepted")
+        return False
+    if resp.status_code == 401:
+        logging.info(
+            f"❌ Guesses rejected ({resp.status_code}): Unauthorized,Please check your API key"
+        )
         return False
     if resp.status_code == 404:
         logging.info(
