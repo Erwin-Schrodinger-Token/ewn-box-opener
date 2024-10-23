@@ -1,13 +1,13 @@
-version: '2.4'
+version: "2.4"
 services:
   erwin:
     image: ghcr.io/erwin-schrodinger-token/ewn-box-opener:latest
     restart: unless-stopped
     environment:
-      - API_KEY=
+      - API_KEY
   devnet:
     image: ghcr.io/erwin-schrodinger-token/ewn-box-opener:latest
     restart: unless-stopped
     environment:
-      - DEVNET_API_KEY=none
+      - DEVNET_API_KEY
       - API_URL=https://devnet-api.erwin.lol/
