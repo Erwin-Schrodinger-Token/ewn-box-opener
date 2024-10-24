@@ -94,7 +94,7 @@ def do_loop():
         if sleep_time < 10:
             sleep_time = 10
         if sleep_time > 60:
-            sleeptime = 60
+            sleep_time = 60
 
         time.sleep(sleep_time)
 
