@@ -56,6 +56,10 @@ def submit_guesses():
             f"❌ Guesses rejected ({resp.status_code}): {resp.text}"
         )
         return False
+    if resp.status_code == 429:
+        logging.info(
+            f"❌ Guesses rejected ({resp.status_code}): {resp.text}"
+        )
     if resp.status_code == 500:
         logging.info(
             f"❌ Guesses rejected ({resp.status_code}): Internal Server Error"
@@ -93,8 +97,8 @@ def do_loop():
 
         if sleep_time < 10:
             sleep_time = 10
-        if sleep_time > 60:
-            sleep_time = 60
+        if sleep_time > 65:
+            sleep_time = 65
 
         time.sleep(sleep_time)
 
