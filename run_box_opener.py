@@ -60,6 +60,7 @@ def submit_guesses():
         logging.info(
             f"❌ Guesses rejected ({resp.status_code}): {resp.text}"
         )
+        return True
     elif resp.status_code == 500:
         logging.info(
             f"❌ Guesses rejected ({resp.status_code}): Internal Server Error"
