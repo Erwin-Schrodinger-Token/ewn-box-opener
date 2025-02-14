@@ -4,7 +4,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
-COPY . .
+COPY run_box_opener.py run_box_opener.py
+COPY requirements.txt requirements.txt
 
 RUN useradd -ms /bin/bash erwin
 RUN pip install -r requirements.txt
